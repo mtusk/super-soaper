@@ -1,0 +1,4 @@
+node_modules
+.DS_Store
+app\bower_components
+/SuperSoaper.App/bower_components/

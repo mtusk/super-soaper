@@ -1,0 +1,42 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/core-icon-button/core-icon-button.html">
+<link rel="import" href="../bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../bower_components/core-header-panel/core-header-panel.html">
+<link rel="import" href="../bower_components/core-item/core-item.html">
+<link rel="import" href="../bower_components/core-menu/core-menu.html">
+<link rel="import" href="../bower_components/paper-shadow/paper-shadow.html">
+<link rel="import" href="../bower_components/core-icons/av-icons.html">
+<link rel="import" href="../bower_components/core-icons/image-icons.html">
+<link rel="import" href="../bower_components/core-list/core-list.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/core-drawer-panel/core-drawer-panel.html">
+<link rel="import" href="../bower_components/code-mirror/code-mirror.html">
+
+<polymer-element name="soaper-app" fit>
+  <template>
+    <link rel="stylesheet" href="soaper-app.css">
+
+    <core-header-panel mode="waterfall-tall" tallclass="medium-tall" fit>
+      <core-toolbar style="-webkit-app-region: drag;">
+        <div flex></div>
+        <paper-icon-button icon="image:crop-5-4" style="-webkit-app-region: no-drag;"></paper-icon-button>
+        <paper-icon-button icon="close" style="-webkit-app-region: no-drag;"></paper-icon-button>
+        <div class="bottom indent" flex>Super Soaper</div>
+        <paper-fab class="bottom" icon="av:play-arrow" style="top:28px;z-index:1;background-color:green;"></paper-fab>
+      </core-toolbar>
+      
+      <!-- Content -->
+      <code-mirror fit>asdf</code-mirror>
+      
+    </core-header-panel>
+    
+  </template>
+  <script src="soaper-app.js"></script>
+</polymer-element>
