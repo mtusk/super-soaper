@@ -1,21 +1,31 @@
 var gulp = require('gulp'),
     connect = require('gulp-connect'),
-    open = require('gulp-open');
+    open = require('gulp-open'),
+    start = require('gulp-start-process');
 
 gulp.task('serve', function() {
   connect.server({
-    //livereload: true
+      port:3000
   });
 });
 
-gulp.task('open', function() {
+gulp.task('openWeb', function() {
    var options = {
-       url: 'http://localhost:8080',
+       url: 'http://localhost:3000',
        app: 'chrome'
    };
     gulp.src('./index.html')
         .pipe(open('', options));
 });
+
+gulp.task('openApp', function(cb) {
+    var chromePath = '"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"';
+    var projectPath = './';
+    var command = chromePath + ' --load-and-launch-app=' + projectPath;
+    
+    start(command, cb);
+});
  
 gulp.task('default', ['serve']);
-gulp.task('run', ['serve', 'open']);
+gulp.task('runWeb', ['serve', 'openWeb']);
+gulp.task('runApp', ['openApp']);

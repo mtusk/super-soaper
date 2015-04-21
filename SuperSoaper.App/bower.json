@@ -15,9 +15,26 @@
     "polymer": "Polymer/polymer#~0.5.5",
     "core-elements": "Polymer/core-elements#~0.5.5",
     "paper-elements": "Polymer/paper-elements#~0.5.5",
-    "code-mirror": "mtusk/code-mirror#master"
+    "code-mirror": "mtusk/code-mirror#master",
+    "icon-transition": "keanulee/icon-transition#latest",
+    "davej-paper-fab1": "davej/paper-fab#patch-1",
+    "file-input": "~1.1.4"
   },
   "resolutions": {
-    "web-animations-js": "1.0.5"
+    "web-animations-js": "1.0.5",
+    "polymer": "~0.5.5",
+    "paper-button": "^0.5",
+    "core-icons": "^0.5",
+    "core-meta": "^0.5",
+    "font-roboto": "^0.5",
+    "paper-ripple": "^0.5",
+    "paper-shadow": "^0.5",
+    "webcomponentsjs": "^0.5",
+    "core-component-page": "^0.5",
+    "core-icon": "^0.5",
+    "core-focusable": "^0.5",
+    "core-a11y-keys": "^0.5",
+    "core-iconset-svg": "^0.5",
+    "core-iconset": "^0.5"
   }
 }

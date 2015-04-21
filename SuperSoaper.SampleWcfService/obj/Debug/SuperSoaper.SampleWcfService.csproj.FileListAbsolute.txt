@@ -1,0 +1,6 @@
+E:\Users\Adam\Documents\Code\git\super-soaper\SuperSoaper.SampleWcfService\bin\SuperSoaper.SampleWcfService.dll.config
+E:\Users\Adam\Documents\Code\git\super-soaper\SuperSoaper.SampleWcfService\bin\SuperSoaper.SampleWcfService.dll
+E:\Users\Adam\Documents\Code\git\super-soaper\SuperSoaper.SampleWcfService\bin\SuperSoaper.SampleWcfService.pdb
+E:\Users\Adam\Documents\Code\git\super-soaper\SuperSoaper.SampleWcfService\obj\Debug\SuperSoaper.SampleWcfService.csprojResolveAssemblyReference.cache
+E:\Users\Adam\Documents\Code\git\super-soaper\SuperSoaper.SampleWcfService\obj\Debug\SuperSoaper.SampleWcfService.dll
+E:\Users\Adam\Documents\Code\git\super-soaper\SuperSoaper.SampleWcfService\obj\Debug\SuperSoaper.SampleWcfService.pdb

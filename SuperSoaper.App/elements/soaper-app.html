@@ -8,35 +8,144 @@
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/core-header-panel/core-header-panel.html">
 <link rel="import" href="../bower_components/core-item/core-item.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-action-dialog.html">
 <link rel="import" href="../bower_components/core-menu/core-menu.html">
+<link rel="import" href="../bower_components/core-collapse/core-collapse.html">
+<link rel="import" href="../bower_components/core-selector/core-selector.html">
 <link rel="import" href="../bower_components/paper-shadow/paper-shadow.html">
 <link rel="import" href="../bower_components/core-icons/av-icons.html">
 <link rel="import" href="../bower_components/core-icons/image-icons.html">
 <link rel="import" href="../bower_components/core-list/core-list.html">
+<link rel="import" href="../bower_components/core-tooltip/core-tooltip.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/core-drawer-panel/core-drawer-panel.html">
 <link rel="import" href="../bower_components/code-mirror/code-mirror.html">
+<link rel="import" href="../bower_components/file-input/file-input.html">
+<link rel="import" href="../bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="../bower_components/paper-input/paper-input-decorator.html">
+<link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
+<link rel="import" href="../bower_components/core-animated-pages/transitions/slide-from-right.html">
 
 <polymer-element name="soaper-app" fit>
-  <template>
-    <link rel="stylesheet" href="soaper-app.css">
+    <template>
+        <link rel="stylesheet" href="soaper-app.css">
 
-    <core-header-panel mode="waterfall-tall" tallclass="medium-tall" fit>
-      <core-toolbar style="-webkit-app-region: drag;">
-        <div flex></div>
-        <paper-icon-button icon="image:crop-5-4" style="-webkit-app-region: no-drag;"></paper-icon-button>
-        <paper-icon-button icon="close" style="-webkit-app-region: no-drag;"></paper-icon-button>
-        <div class="bottom indent" flex>Super Soaper</div>
-        <paper-fab class="bottom" icon="av:play-arrow" style="top:28px;z-index:1;background-color:green;"></paper-fab>
-      </core-toolbar>
-      
-      <!-- Content -->
-      <code-mirror fit>asdf</code-mirror>
-      
-    </core-header-panel>
-    
-  </template>
-  <script src="soaper-app.js"></script>
+        <style>
+            paper-fab {
+                background-color: #795548;
+            }
+
+                paper-fab.green {
+                    background-color: #4CAF50;
+                }
+
+            paper-tabs::shadow #selectionBar {
+                background-color: #fff;
+            }
+
+            paper-tabs paper-tab::shadow #ink {
+                color: #fff;
+            }
+        </style>
+
+        <core-ajax url="http://localhost:63777/Service1.svc"
+                   id="soapAjax"
+                   method="POST"
+                   contenttype="text/xml;charset=UTF-8"
+                   on-core-response="{{soapResponse}}"
+                   on-core-error="{{soapError}}"></core-ajax>
+
+        <core-header-panel mode="seamed" fit>
+            <core-toolbar style="-webkit-app-region: drag;" class="medium-tall">
+                <!--<paper-icon-button icon="arrow-back"
+                                   style="-webkit-app-region: no-drag;"
+                                   hidden?="{{currentTabIndex == 0}}"
+                                   disabled?="{{currentTabIndex == 0}}"
+                                   on-click="{{moveBack}}"></paper-icon-button>-->
+
+                <div flex>Super Soaper</div>
+
+                <paper-icon-button icon="folder" on-click="{{openFileClicked}}" style="-webkit-app-region: no-drag;"></paper-icon-button>
+                <paper-icon-button icon="save" style="-webkit-app-region: no-drag;"></paper-icon-button>
+                <paper-icon-button icon="more-vert" style="-webkit-app-region: no-drag;"></paper-icon-button>
+
+                <paper-tabs class="bottom fit" style="margin-right:72px;" selected="{{currentTabIndex}}">
+                    <paper-tab>Configuration</paper-tab>
+                    <paper-tab>Request</paper-tab>
+                    <paper-tab>Response</paper-tab>
+                </paper-tabs>
+
+                <div class="bottom" flex></div>
+                <paper-fab class="{{ {'bottom': true, 'green': currentTabIndex === 2} | tokenList }}"
+                           icon="{{ {'arrow-forward': currentTabIndex < 2, 'check': currentTabIndex === 2 } | tokenList }}"
+                           on-click="{{moveNextOrRun}}"
+                           style="top:28px;z-index:99;"></paper-fab>
+                <!-- av:play-arrow -->
+
+            </core-toolbar>
+
+            <core-animated-pages selected="{{currentTabIndex}}"
+                                 transitions="slide-from-right"
+                                 fit
+                                 on-core-animated-pages-transition-end="{{pageTransitioned}}">
+                <section>
+
+                    <paper-shadow style="background-color:#FFF; margin:2em;">
+                        <core-toolbar style="background-color:#E0E0E0;color:#212121;">
+                            <div flex>Endpoint</div>
+                        </core-toolbar>
+                        <paper-input style="margin:1em;" label="Endpoint URL" flex></paper-input>
+                    </paper-shadow>
+
+                    <paper-shadow style="background-color:#FFF; margin:2em;">
+                        <core-toolbar style="background-color:#E0E0E0;color:#212121;">
+                            <div flex>Operation</div>
+                            <paper-icon-button icon="search" on-click="{{searchButtonClicked}}"></paper-icon-button>
+                        </core-toolbar>
+                        <core-collapse opened="{{searchExpanded}}" style="background-color:#EEEEEE;">
+                            <paper-input style="margin:0 1em;" label="Search" value="{{searchText}}" flex></paper-input>
+                        </core-collapse>
+                        <core-selector class="operations-selector"
+                                       on-core-activate="{{operationSelected}}"
+                                       selected="{{selectedOperationIndex}}">
+                            <template repeat="{{operation in operations | filterOperations(searchText)}}">
+
+                                <paper-item style="border-bottom: 1px solid #EEEEEE;">
+                                    <span>
+                                        {{operation.name}}<br />
+                                        <small style="color:#888;">{{operation.url}}</small>
+                                    </span>
+                                </paper-item>
+
+                            </template>
+                        </core-selector>
+                    </paper-shadow>
+
+                </section>
+                <section>
+                    <code-mirror id="requestMirror" fit>one</code-mirror>
+                </section>
+                <section>
+                    <code-mirror id="responseMirror" fit>this.page = 1;</code-mirror>
+                </section>
+            </core-animated-pages>
+
+        </core-header-panel>
+
+        <paper-action-dialog id="fileUploadDialog" heading="Open File" backdrop>
+            <p>Choose a file to open. Valid files have the extension "soap" and are really cool with a long sentence to fill things out nicely.</p>
+            <file-input extensions='["soap"]'>
+                <span class="glyphicon glyphicon-file"></span> Select a file
+            </file-input>
+
+            <paper-button dismissive>Template</paper-button>
+            <paper-button affirmative>Cancel</paper-button>
+            <paper-button affirmative autofocus style="color:#03A9F4;">Open</paper-button>
+        </paper-action-dialog>
+    </template>
+    <script src="soaper-app.js"></script>
 </polymer-element>
